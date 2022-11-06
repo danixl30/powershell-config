@@ -22,6 +22,7 @@ function statusItem {
 function listDisks {
 		gdr -PSProvider 'FileSystem'
 }
+function timeCommand { $Command = "$args"; Measure-Command { Invoke-Expression $Command 2>&1 | out-default} }
 function topCommand {
 		$num = [int]$args[0]
 		if ($num -eq 0) {
@@ -34,6 +35,7 @@ Set-Alias -Name df -Value listDisks
 Set-Alias stat -Value statusItem
 Set-Alias netstat Get-NetTCPConnection
 Set-Alias -Name pwdc -Value pwdclip
+Set-Alias -Name time -Value timeCommand
 Set-Alias -Name subl -Value 'C:\Program Files\Sublime Text\sublime_text.exe'
 Set-Alias -Name firefox -Value 'C:\Program Files\Mozilla Firefox\firefox.exe'
 Set-Alias -Name chrome -Value 'C:\Program Files\Google\Chrome\Application\chrome.exe'
