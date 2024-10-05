@@ -47,6 +47,7 @@ Set-Alias vim nvim
 Set-Alias vi nvim
 Set-Alias open explorer
 Set-Alias lt tree
+Set-Alias who whoami
 
 # Icons
 Import-Module -Name Terminal-Icons
