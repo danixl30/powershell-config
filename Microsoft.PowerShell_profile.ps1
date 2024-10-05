@@ -30,6 +30,25 @@ function topCommand {
 		}
 		ps | sort -desc cpu | select -first $num
 }
+
+function computeWho {
+    $Computer = $env:COMPUTERNAME
+    $Users = query user /server:$Computer 2>&1
+
+    $Users = $Users | ForEach-Object {
+        (($_.trim() -replace ">" -replace "(?m)^([A-Za-z0-9]{3,})\s+(\d{1,2}\s+\w+)", '$1  none  $2' -replace "\s{2,}", "," -replace "none", $null))
+    } | ConvertFrom-Csv
+
+    foreach ($User in $Users)
+    {
+        [PSCustomObject]@{
+            ComputerName = $Computer
+            Username = $User.USERNAME
+            SessionState = $User.STATE.Replace("Disc", "Disconnected")
+            SessionType = $($User.SESSIONNAME -Replace '#', '' -Replace "[0-9]+", "")
+        } 
+    }
+}
 Set-Alias top topCommand
 Set-Alias -Name df -Value listDisks
 Set-Alias stat -Value statusItem
@@ -47,7 +66,7 @@ Set-Alias vim nvim
 Set-Alias vi nvim
 Set-Alias open explorer
 Set-Alias lt tree
-Set-Alias who whoami
+Set-Alias who computeWho
 
 # Icons
 Import-Module -Name Terminal-Icons
