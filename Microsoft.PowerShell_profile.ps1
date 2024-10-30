@@ -30,6 +30,7 @@ function topCommand {
 		}
 		ps | sort -desc cpu | select -first $num
 }
+function takeCmd {mkdir $args[0] && cd $args[0]}
 
 function computeWho {
     $Computer = $env:COMPUTERNAME
@@ -49,6 +50,7 @@ function computeWho {
         } 
     }
 }
+Set-Alias take takeCmd
 Set-Alias top topCommand
 Set-Alias -Name df -Value listDisks
 Set-Alias stat -Value statusItem
